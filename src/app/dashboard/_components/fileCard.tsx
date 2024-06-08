@@ -86,7 +86,7 @@ export function FileCard({
 							width='200'
 							height='200'
 							src={file.url}
-							className='h-34 w-72 object-cover rounded-2xl'
+							className='h-[150px] w-72 object-cover rounded-2xl'
 						/>
 					)}
 				</div>
@@ -97,7 +97,7 @@ export function FileCard({
 							width='200'
 							height='200'
 							src={file.url}
-							className='h-34 w-72 object-cover rounded-2xl'
+							className='h-[150px] w-72 object-cover rounded-2xl'
 						/>
 					)}
 				</div>
@@ -107,7 +107,7 @@ export function FileCard({
 							title={file.name}
 							src={file.url}
 							allowFullScreen
-							className='h-35 w-full object-cover rounded-2xl'
+							className='h-[150px] w-full object-cover rounded-2xl'
 						/>
 					)}
 				</div>
