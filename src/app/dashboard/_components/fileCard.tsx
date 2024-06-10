@@ -76,28 +76,28 @@ export function FileCard({
 				open={isModalOpen}
 				onOpenChange={setIsModalOpen}
 			>
-				<DialogTrigger asChild>
-					<Card
-						className='auto-rows-max'
-						onClick={() => setIsModalOpen(true)}
-					>
-						<CardHeader className='flex flex-row items-center justify-between'>
-							<CardTitle className='flex gap-2 items-center text-primary-foreground'>
-								<div className='flex justify-center'>{typeIcons[file.type]}</div>
-								{file.name}
-								{extension[file.type]}
-							</CardTitle>
-							<div className='items-center'>
-								<FileCardAction
-									isFavorited={file.isFavorited}
-									isDocument={file.isDocument}
-									isPicture={file.isPicture}
-									isMusic={file.isMusic}
-									isVideo={file.isVideo}
-									file={file}
-								/>
-							</div>
-						</CardHeader>
+				<Card
+					className='auto-rows-max'
+					onClick={() => setIsModalOpen(true)}
+				>
+					<CardHeader className='flex flex-row items-center justify-between'>
+						<CardTitle className='flex gap-2 items-center text-primary-foreground'>
+							<div className='flex justify-center'>{typeIcons[file.type]}</div>
+							{file.name}
+							{extension[file.type]}
+						</CardTitle>
+						<div className='items-center'>
+							<FileCardAction
+								isFavorited={file.isFavorited}
+								isDocument={file.isDocument}
+								isPicture={file.isPicture}
+								isMusic={file.isMusic}
+								isVideo={file.isVideo}
+								file={file}
+							/>
+						</div>
+					</CardHeader>
+					<DialogTrigger asChild>
 						<CardContent className='h-[200px]'>
 							<div className='flex justify-center'>
 								{file.type === 'jpeg' && file.url && (
@@ -181,23 +181,23 @@ export function FileCard({
 								)}
 							</div>
 						</CardContent>
-						<CardFooter className='flex flex-row justify-between'>
-							<div className='flex gap-2 text-[10px] text-primary-foreground items-center'>
-								<Avatar className='w-6 h-6 z-0'>
-									<AvatarImage src={userProfile?.image} />
-									<AvatarFallback>CN</AvatarFallback>
-								</Avatar>
-								{userProfile?.name}
-							</div>
-							<div className='text-[10px] w-[90px] text-primary-foreground'>
-								Di Upload{' '}
-								{formatRelative(new Date(file._creationTime), new Date(), {
-									locale: id,
-								})}
-							</div>
-						</CardFooter>
-					</Card>
-				</DialogTrigger>
+					</DialogTrigger>
+					<CardFooter className='flex flex-row justify-between'>
+						<div className='flex gap-2 text-[10px] text-primary-foreground items-center'>
+							<Avatar className='w-6 h-6 z-0'>
+								<AvatarImage src={userProfile?.image} />
+								<AvatarFallback>CN</AvatarFallback>
+							</Avatar>
+							{userProfile?.name}
+						</div>
+						<div className='text-[10px] w-[90px] text-primary-foreground'>
+							Di Upload{' '}
+							{formatRelative(new Date(file._creationTime), new Date(), {
+								locale: id,
+							})}
+						</div>
+					</CardFooter>
+				</Card>
 
 				<DialogContent>
 					<DialogHeader>
