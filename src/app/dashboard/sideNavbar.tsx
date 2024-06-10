@@ -131,18 +131,10 @@ export function SideNavbar() {
 			<div className='flex sm:hidden justify-center'>
 				<div className='w-full flex flex-col items-center gap-2'>
 					<div className='w-full'>
-						<div className='flex flex-row justify-between items-center border-2 rounded-lg p-2'>
-							<Link
-								href='/dashboard/allFiles'
-								className={clsx('text-primary flex p-2 rounded-md border-2', {
-									'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/allFiles'),
-								})}
-							>
-								<FilesIcon />
-							</Link>
+						<div className='flex flex-row justify-between items-center border-2 rounded-lg gap-2 p-2'>
 							<Link
 								href='/dashboard/favorites'
-								className={clsx('text-primary flex p-2 rounded-md border-2', {
+								className={clsx('text-primary flex py-2 px-[6%] rounded-md border-2', {
 									'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/favorites'),
 								})}
 							>
@@ -150,7 +142,7 @@ export function SideNavbar() {
 							</Link>
 							<Link
 								href='/dashboard/trash'
-								className={clsx('text-primary flex p-2 rounded-md border-2', {
+								className={clsx('text-primary flex py-2 px-[6%] rounded-md border-2', {
 									'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/trash'),
 								})}
 							>
@@ -174,36 +166,84 @@ export function SideNavbar() {
 				<div className='w-full'>
 					<div className='flex flex-row justify-between bg-white border-t-2 p-5'>
 						<Link
+							href='/dashboard/allFiles'
+							className={clsx('text-primary flex p-2 rounded-md border-2', {
+								'bg-primary rounded-md text-secondary gap-1': pathname.includes('/dashboard/allFiles'),
+							})}
+						>
+							<FilesIcon />
+							<p
+								className={clsx({
+									hidden: !pathname.includes('/dashboard/allFiles'),
+									'flex text-center': pathname.includes('/dashboard/allFiles'),
+								})}
+							>
+								Semua Files
+							</p>
+						</Link>
+						<Link
 							href='/dashboard/document'
 							className={clsx('text-primary flex p-2 rounded-md border-2', {
-								'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/document'),
+								'bg-primary rounded-md text-secondary gap-1': pathname.includes('/dashboard/document'),
 							})}
 						>
 							<FileTextIcon />
+							<p
+								className={clsx({
+									hidden: !pathname.includes('/dashboard/document'),
+									'flex text-center': pathname.includes('/dashboard/document'),
+								})}
+							>
+								Document
+							</p>
 						</Link>
 						<Link
 							href='/dashboard/picture'
 							className={clsx('text-primary flex p-2 rounded-md border-2', {
-								'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/picture'),
+								'bg-primary rounded-md text-secondary gap-1': pathname.includes('/dashboard/picture'),
 							})}
 						>
 							<FileImageIcon />
+							<p
+								className={clsx({
+									hidden: !pathname.includes('/dashboard/picture'),
+									'flex text-center': pathname.includes('/dashboard/picture'),
+								})}
+							>
+								Picture
+							</p>
 						</Link>
 						<Link
 							href='/dashboard/music'
 							className={clsx('text-primary flex p-2 rounded-md border-2', {
-								'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/music'),
+								'bg-primary rounded-md text-secondary gap-1': pathname.includes('/dashboard/music'),
 							})}
 						>
 							<FileAudio2Icon />
+							<p
+								className={clsx({
+									hidden: !pathname.includes('/dashboard/music'),
+									'flex text-center': pathname.includes('/dashboard/music'),
+								})}
+							>
+								Music
+							</p>
 						</Link>
 						<Link
 							href='/dashboard/video'
 							className={clsx('text-primary flex p-2 rounded-md border-2', {
-								'bg-primary rounded-md text-secondary': pathname.includes('/dashboard/video'),
+								'bg-primary rounded-md text-secondary gap-1': pathname.includes('/dashboard/video'),
 							})}
 						>
 							<FileVideoIcon />
+							<p
+								className={clsx({
+									hidden: !pathname.includes('/dashboard/video'),
+									'flex text-center': pathname.includes('/dashboard/video'),
+								})}
+							>
+								Video
+							</p>
 						</Link>
 					</div>
 				</div>
