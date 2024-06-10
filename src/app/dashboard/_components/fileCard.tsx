@@ -76,10 +76,7 @@ export function FileCard({
 				open={isModalOpen}
 				onOpenChange={setIsModalOpen}
 			>
-				<Card
-					className='auto-rows-max'
-					onClick={() => setIsModalOpen(true)}
-				>
+				<Card className='auto-rows-max'>
 					<CardHeader className='flex flex-row items-center justify-between'>
 						<CardTitle className='flex gap-2 items-center text-primary-foreground'>
 							<div className='flex justify-center'>{typeIcons[file.type]}</div>
