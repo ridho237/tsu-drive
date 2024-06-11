@@ -20,6 +20,7 @@ import {
 	Share2,
 	ArrowDownToLine,
 	ArrowLeftRightIcon,
+	InfoIcon,
 } from 'lucide-react';
 import {
 	AlertDialog,
@@ -37,6 +38,11 @@ import { api } from '../../../../convex/_generated/api';
 import { useToast } from '@/components/ui/use-toast';
 import { Protect } from '@clerk/nextjs';
 
+type FileType = Doc<'files'> & {
+	url: string | null;
+	deletedAt?: number; // Add deletedAt property
+};
+
 export function FileCardAction({
 	file,
 	isFavorited,
@@ -45,7 +51,7 @@ export function FileCardAction({
 	isMusic,
 	isVideo,
 }: {
-	readonly file: Doc<'files'> & { url: string | null };
+	readonly file: FileType;
 	readonly isFavorited: boolean;
 	readonly isDocument: boolean;
 	readonly isPicture: boolean;
@@ -70,6 +76,7 @@ export function FileCardAction({
 	const [newName, setNewName] = useState('');
 	const [shareableLink, setShareableLink] = useState<string | null>(null);
 	const [isShareableLinkOpen, setIsShareableLinkOpen] = useState(false);
+	const [isFileDetailsOpen, setIsFileDetailsOpen] = useState(false);
 
 	const handleDownload = () => {
 		if (!file.url) return;
@@ -104,7 +111,7 @@ export function FileCardAction({
 	};
 
 	return (
-		<>
+		<Protect>
 			<AlertDialog
 				open={isConfirmOpen}
 				onOpenChange={setIsConfirmOpen}
@@ -215,6 +222,33 @@ export function FileCardAction({
 					</AlertDialogFooter>
 				</AlertDialogContent>
 			</AlertDialog>
+			<AlertDialog
+				open={isFileDetailsOpen}
+				onOpenChange={setIsFileDetailsOpen}
+			>
+				<AlertDialogContent>
+					<AlertDialogHeader>
+						<AlertDialogTitle>Detail File</AlertDialogTitle>
+					</AlertDialogHeader>
+					<div className='file-details p-4 mb-4 border rounded shadow-sm'>
+						<p>
+							<strong>Name:</strong> {file.name}
+						</p>
+						<p>
+							<strong>Size:</strong> {(file.size / (1024 * 1024)).toFixed(2)} MB
+						</p>
+						<p>
+							<strong>Type:</strong> {file.type}
+						</p>
+						<p>
+							<strong>Created:</strong> {new Date(file._creationTime).toLocaleString()}
+						</p>
+					</div>
+					<AlertDialogFooter>
+						<AlertDialogCancel>Tutup</AlertDialogCancel>
+					</AlertDialogFooter>
+				</AlertDialogContent>
+			</AlertDialog>
 			<DropdownMenu>
 				<DropdownMenuTrigger>
 					<MoreVertical className='text-primary-foreground' />
@@ -226,7 +260,15 @@ export function FileCardAction({
 						}}
 						className='flex gap-1 items-center cursor-pointer'
 					>
-						<PencilIcon className='w-4 h-4' /> Ganti Nama
+						<PencilIcon className='w-4 h-4' /> Rename
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						onClick={() => {
+							setIsFileDetailsOpen(true);
+						}}
+						className='flex gap-1 items-center cursor-pointer'
+					>
+						<InfoIcon className='w-4 h-4' /> Lihat Detail File
 					</DropdownMenuItem>
 					<DropdownMenuItem
 						onClick={() => handleToggleCategory('favorite')}
@@ -234,7 +276,7 @@ export function FileCardAction({
 					>
 						{isFavorited ? (
 							<div className='flex gap-1 items-center'>
-								<StarOff className='w-4 h-4' /> Unfavorite
+								<StarOff className='w-4 h-4' /> Hapus Favorite
 							</div>
 						) : (
 							<div className='flex gap-1 items-center'>
@@ -295,21 +337,15 @@ export function FileCardAction({
 							</DropdownMenuSubContent>
 						</DropdownMenuPortal>
 					</DropdownMenuSub>
-					<DropdownMenuItem
-						onClick={() => {
-							setIsShareableLinkOpen(true);
-						}}
-						className='flex gap-1 items-center cursor-pointer'
-					>
-						<Share2 className='w-4 h-4' />
-						Bagikan
-					</DropdownMenuItem>
+
+					<DropdownMenuSeparator />
 					<DropdownMenuItem
 						onClick={handleDownload}
 						className='flex gap-1 items-center cursor-pointer'
 					>
 						<ArrowDownToLine className='w-4 h-4' /> Download
 					</DropdownMenuItem>
+
 					<Protect
 						condition={(check) => {
 							return (
@@ -320,32 +356,38 @@ export function FileCardAction({
 						}}
 						fallback={<></>}
 					>
-						<DropdownMenuSeparator />
 						<DropdownMenuItem
-							onClick={() => {
-								if (file.shouldDelete) {
-									restoreFile({
-										fileId: file._id,
-									});
-								} else {
-									setIsConfirmOpen(true);
-								}
-							}}
+							onClick={() => setIsShareableLinkOpen(true)}
 							className='flex gap-1 items-center cursor-pointer'
 						>
-							{file.shouldDelete ? (
-								<div className='flex gap-1 text-green-600 items-center cursor-pointer'>
-									<UndoIcon className='w-4 h-4' /> Kembalikan
-								</div>
-							) : (
-								<div className='flex gap-1 text-red-600 items-center cursor-pointer'>
-									<TrashIcon className='w-4 h-4' /> Hapus
-								</div>
-							)}
+							<Share2 className='w-4 h-4' /> Bagikan Link
 						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						{file.deletedAt ? (
+							<DropdownMenuItem
+								onClick={async () => {
+									await restoreFile({ fileId: file._id });
+									toast({
+										variant: 'default',
+										title: 'File dipulihkan',
+										description: 'File kamu telah dipulihkan',
+									});
+								}}
+								className='flex gap-1 items-center cursor-pointer'
+							>
+								<UndoIcon className='w-4 h-4' /> Restore File
+							</DropdownMenuItem>
+						) : (
+							<DropdownMenuItem
+								onClick={() => setIsConfirmOpen(true)}
+								className='flex gap-1 items-center cursor-pointer'
+							>
+								<TrashIcon className='w-4 h-4' /> Hapus File
+							</DropdownMenuItem>
+						)}
 					</Protect>
 				</DropdownMenuContent>
 			</DropdownMenu>
-		</>
+		</Protect>
 	);
 }

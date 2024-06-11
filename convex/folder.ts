@@ -95,7 +95,7 @@ export const folderMusics = mutation({
 		}
 
 		const picture = await ctx.db
-			.query('pictures')
+			.query('musics')
 			.withIndex('by_userId_orgId_fileId', (q) =>
 				q.eq('userId', access.user._id).eq('orgId', access.file.orgId).eq('fileId', access.file._id)
 			)
@@ -121,7 +121,7 @@ export const getAllMusics = query({
 		}
 
 		const picture = await ctx.db
-			.query('pictures')
+			.query('musics')
 			.withIndex('by_userId_orgId_fileId', (q) => q.eq('userId', hasAccess.user._id).eq('orgId', args.orgId))
 			.collect();
 		return picture;
@@ -137,7 +137,7 @@ export const folderVideos = mutation({
 		}
 
 		const picture = await ctx.db
-			.query('pictures')
+			.query('videos')
 			.withIndex('by_userId_orgId_fileId', (q) =>
 				q.eq('userId', access.user._id).eq('orgId', access.file.orgId).eq('fileId', access.file._id)
 			)
@@ -163,7 +163,7 @@ export const getAllVideos = query({
 		}
 
 		const picture = await ctx.db
-			.query('pictures')
+			.query('videos')
 			.withIndex('by_userId_orgId_fileId', (q) => q.eq('userId', hasAccess.user._id).eq('orgId', args.orgId))
 			.collect();
 		return picture;
