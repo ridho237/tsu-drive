@@ -94,20 +94,20 @@ export const folderMusics = mutation({
 			throw new ConvexError('Tidak ada akses ke File');
 		}
 
-		const picture = await ctx.db
+		const music = await ctx.db
 			.query('musics')
 			.withIndex('by_userId_orgId_fileId', (q) =>
 				q.eq('userId', access.user._id).eq('orgId', access.file.orgId).eq('fileId', access.file._id)
 			)
 			.first();
-		if (!picture) {
-			await ctx.db.insert('pictures', {
+		if (!music) {
+			await ctx.db.insert('musics', {
 				fileId: access.file._id,
 				userId: access.user._id,
 				orgId: access.file.orgId,
 			});
 		} else {
-			await ctx.db.delete(picture._id);
+			await ctx.db.delete(music._id);
 		}
 	},
 });
@@ -120,11 +120,11 @@ export const getAllMusics = query({
 			return [];
 		}
 
-		const picture = await ctx.db
+		const music = await ctx.db
 			.query('musics')
 			.withIndex('by_userId_orgId_fileId', (q) => q.eq('userId', hasAccess.user._id).eq('orgId', args.orgId))
 			.collect();
-		return picture;
+		return music;
 	},
 });
 
@@ -136,20 +136,20 @@ export const folderVideos = mutation({
 			throw new ConvexError('Tidak ada akses ke File');
 		}
 
-		const picture = await ctx.db
+		const video = await ctx.db
 			.query('videos')
 			.withIndex('by_userId_orgId_fileId', (q) =>
 				q.eq('userId', access.user._id).eq('orgId', access.file.orgId).eq('fileId', access.file._id)
 			)
 			.first();
-		if (!picture) {
-			await ctx.db.insert('pictures', {
+		if (!video) {
+			await ctx.db.insert('videos', {
 				fileId: access.file._id,
 				userId: access.user._id,
 				orgId: access.file.orgId,
 			});
 		} else {
-			await ctx.db.delete(picture._id);
+			await ctx.db.delete(video._id);
 		}
 	},
 });
@@ -162,10 +162,10 @@ export const getAllVideos = query({
 			return [];
 		}
 
-		const picture = await ctx.db
+		const video = await ctx.db
 			.query('videos')
 			.withIndex('by_userId_orgId_fileId', (q) => q.eq('userId', hasAccess.user._id).eq('orgId', args.orgId))
 			.collect();
-		return picture;
+		return video;
 	},
 });
