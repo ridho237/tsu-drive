@@ -40,7 +40,6 @@ import { Protect } from '@clerk/nextjs';
 
 type FileType = Doc<'files'> & {
 	url: string | null;
-	deletedAt?: number; // Add deletedAt property
 };
 
 export function FileCardAction({
@@ -363,7 +362,7 @@ export function FileCardAction({
 							<Share2 className='w-4 h-4' /> Bagikan Link
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
-						{file.deletedAt ? (
+						{file.shouldDelete ? (
 							<DropdownMenuItem
 								onClick={async () => {
 									await restoreFile({ fileId: file._id });
