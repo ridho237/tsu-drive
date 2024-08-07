@@ -149,6 +149,8 @@ export function FileBrowser({
 								<SelectItem value='word'>Word</SelectItem>
 								<SelectItem value='excel'>Excel</SelectItem>
 								<SelectItem value='powerpoint'>PPT</SelectItem>
+								<SelectItem value='zip'>Zip Archive</SelectItem>
+								<SelectItem value='rar'>Rar Archive</SelectItem>
 							</SelectContent>
 						</Select>
 					</div>

@@ -27,6 +27,7 @@ import {
 	FilePlusIcon,
 	FilmIcon,
 	MusicIcon,
+	FileArchive,
 } from 'lucide-react';
 
 export function FileCard({
@@ -56,6 +57,8 @@ export function FileCard({
 		word: <FilePenIcon />,
 		excel: <FileSpreadsheetIcon />,
 		powerpoint: <FilePieChartIcon />,
+		zip: <FileArchive />,
+		rar: <FileArchive />,
 	} as Record<Doc<'files'>['type'], ReactNode>;
 
 	const extension = {
@@ -68,6 +71,8 @@ export function FileCard({
 		word: '.docx',
 		excel: '.xlsx',
 		powerpoint: '.pptx',
+		zip: '.zip',
+		rar: '.rar',
 	} as Record<Doc<'files'>['type'], ReactNode>;
 
 	return (
@@ -146,6 +151,12 @@ export function FileCard({
 							</div>
 							<div className='flex justify-center text-primary-foreground'>
 								{file.type === 'pdf' && <FilePlusIcon className='flex justify-center w-32 h-32'></FilePlusIcon>}
+							</div>
+							<div className='flex justify-center text-primary-foreground'>
+								{file.type === 'zip' && <FileArchive className='flex justify-center w-32 h-32'></FileArchive>}
+							</div>
+							<div className='flex justify-center text-primary-foreground'>
+								{file.type === 'rar' && <FileArchive className='flex justify-center w-32 h-32'></FileArchive>}
 							</div>
 							<div className='flex justify-center '>
 								{file.type === 'word' && (

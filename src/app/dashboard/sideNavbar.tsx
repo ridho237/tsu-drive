@@ -23,7 +23,8 @@ export function SideNavbar() {
 	const organization = useOrganization();
 	const user = useUser();
 
-	const MAX_STORAGE_MB = 500;
+	const MAX_STORAGE_TB = 1; // Max storage in TB
+	const MAX_STORAGE_MB = MAX_STORAGE_TB * 1024 * 1024; // Convert TB to MB
 
 	let orgId: string | undefined = undefined;
 	if (organization.isLoaded && user.isLoaded) {
@@ -40,6 +41,7 @@ export function SideNavbar() {
 	);
 
 	let storageUsedNumber: number;
+
 	if (typeof storageUsed === 'number') {
 		storageUsedNumber = storageUsed;
 	} else {
@@ -122,7 +124,7 @@ export function SideNavbar() {
 						Penyimpanan
 					</h1>
 					<h3 className='mb-3 text-primary'>
-						{typeof storageUsed === 'number' ? storageUsed.toFixed(2) : '0.00'} MB / {MAX_STORAGE_MB} MB
+						{storageUsedNumber.toFixed(2)} MB / {MAX_STORAGE_TB.toFixed(2)} TB
 					</h3>
 					<ProgressBar progress={storageProgress} />
 				</div>
@@ -155,7 +157,7 @@ export function SideNavbar() {
 						<h1 className='flex flex-cols justify-center gap-2 mb-3 text-primary text-sm'>
 							<CloudIcon />
 							Penyimpanan {''}
-							{typeof storageUsed === 'number' ? storageUsed.toFixed(2) : '0.00'} MB / {MAX_STORAGE_MB} MB
+							{typeof storageUsed === 'number' ? storageUsed.toFixed(2) : '0.00'} MB / {MAX_STORAGE_TB} MB
 						</h1>
 						<ProgressBar progress={storageProgress} />
 					</div>

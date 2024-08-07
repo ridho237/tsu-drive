@@ -156,7 +156,7 @@ export const getStorageUsed = query({
 			.collect();
 
 		const totalStorageBytes = files.reduce((acc, file) => acc + file.size, 0);
-		const totalStorageMB = totalStorageBytes / (1024 * 1024);
+		const totalStorageMB = totalStorageBytes / (1024 * 1024); // Convert bytes to MB
 		return totalStorageMB;
 	},
 });
