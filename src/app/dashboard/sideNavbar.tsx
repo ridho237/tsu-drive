@@ -157,7 +157,7 @@ export function SideNavbar() {
 						<h1 className='flex flex-cols justify-center gap-2 mb-3 text-primary text-sm'>
 							<CloudIcon />
 							Penyimpanan {''}
-							{typeof storageUsed === 'number' ? storageUsed.toFixed(2) : '0.00'} MB / {MAX_STORAGE_TB} MB
+							{storageUsedNumber.toFixed(2)} MB / {MAX_STORAGE_TB.toFixed(2)} TB
 						</h1>
 						<ProgressBar progress={storageProgress} />
 					</div>
